@@ -15,3 +15,21 @@ img {
     width: 42px;
     height: 42px;
 }
+
+.wordList{
+    display: flex;
+}
+
+li{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+li > img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}

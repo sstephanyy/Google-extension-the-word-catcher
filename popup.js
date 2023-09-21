@@ -9,8 +9,11 @@ function updateWords(words) {
 
     for (let i = 0; i < words.length; i++) {
         const list = document.createElement('li');
+        const img = document.createElement('img');
+        img.src = './images/delete.png';
         list.textContent = counter + ' - ' + words[i];
         wordOfList.appendChild(list); 
+        list.appendChild(img)
         counter++;
 
     }
