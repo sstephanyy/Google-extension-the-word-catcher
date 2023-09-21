@@ -1,16 +1,18 @@
-// Function to update the UI with the retrieved words
 function updateWords(words) {
-    const wordOfList = document.getElementById("wordList"); // ul HTML tag
-    if (!wordOfList) return;
+    const wordOfList = document.getElementById("wordList"); 
+    if (!wordOfList) return; //If doesn't exit wordOfList, the function returns early, ensuring that it doesn't throw errors when trying to manipulate a nonexistent element.
 
-    // Clear the existing list
+    // to ensure that when new words are retrieved and displayed in the UI, they don't accumulate on top of the previously displayed words. Instead, it clears out any previously displayed words within wordOfList before populating it with the newly retrieved words
     wordOfList.innerHTML = '';
 
-    // Populate the list with the retrieved words
+    let counter = 1;
+
     for (let i = 0; i < words.length; i++) {
         const list = document.createElement('li');
-        list.textContent = words[i];
-        wordOfList.appendChild(list);
+        list.textContent = counter + ' - ' + words[i];
+        wordOfList.appendChild(list); 
+        counter++;
+
     }
 }
 
@@ -20,27 +22,13 @@ chrome.storage.local.get({ words: [] }, (result) => {
     updateWords(words);
 });
 
-// Add your message listener to handle new words (as you already have)
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     let text = request.text;
 
-    // Check if the message contains the 'text' property
     try {
-        if (text !== undefined) {
+        if (text) {
             const wordOfList = document.getElementById("wordList");
             if (!wordOfList) return;
-
-            // Increment a counter for each word
-            if (!wordOfList.dataset.counter) {
-                wordOfList.dataset.counter = 1;
-            } else {
-                wordOfList.dataset.counter++;
-            }
-
-            // Create an <li> element and append it to the <ul> element
-            const list = document.createElement('li');
-            list.textContent = wordOfList.dataset.counter + '-' + text;
-            wordOfList.appendChild(list);
 
             // Save the updated list to chrome.storage.local
             chrome.storage.local.set({ words: Array.from(wordOfList.children).map(li => li.textContent) }, () => {
