@@ -26,10 +26,11 @@ li{
     justify-content: space-between;
 }
 
-li > img{
+.remove-word{
     width: 20px;
     height: 20px;
     cursor: pointer;
     display: flex;
-    align-items: center;
+    align-items: center; 
 }
+

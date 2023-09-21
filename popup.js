@@ -11,12 +11,31 @@ function updateWords(words) {
         const list = document.createElement('li');
         const img = document.createElement('img');
         img.src = './images/delete.png';
-        list.textContent = counter + ' - ' + words[i];
+        img.className = 'remove-word';
+        list.textContent = (counter++) + ' - ' + words[i];
         wordOfList.appendChild(list); 
-        list.appendChild(img)
-        counter++;
+        list.appendChild(img);
 
+        img.addEventListener('click', function (){
+            const wordToRemove = words[i]; // get the current element clicked
+            removeWord(wordToRemove);
+        });
     }
+}
+
+function removeWord(word) {
+    chrome.storage.local.get({ words: [] }, (result) => {
+        const words = result.words || [];
+        const index = words.indexOf(word); //finds the index of the word to remove within the words array.
+        if (index >= 0) {
+            words.splice(index, 1); // Remove the word from the array
+            //updates the words array in local storage with the modified words array, which no longer contains the removed word
+            chrome.storage.local.set({ words: words }, () => {
+                console.log(`Word "${word}" removed from storage.`);
+                updateWords(words);
+            });
+        }
+    });
 }
 
 // Add a listener to retrieve and update the UI when the content script loads
@@ -24,6 +43,8 @@ chrome.storage.local.get({ words: [] }, (result) => {
     const words = result.words || [];
     updateWords(words);
 });
+
+
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     let text = request.text;
