@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 2px;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.content{
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    font-size: 12px;
+}
+img {
+    width: 42px;
+    height: 42px;
+}
