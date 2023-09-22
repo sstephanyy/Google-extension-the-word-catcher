@@ -7,13 +7,30 @@ function updateWords(words) {
 
     let counter = 1;
 
+
     for (let i = 0; i < words.length; i++) {
         const list = document.createElement('li');
+
+        let exampleLink = document.createElement('a');
+        exampleLink.href = `https://www.playphrase.me/#/search?q=${words[i]}`; 
+        exampleLink.textContent = "Exemplos...";
+
+        exampleLink.addEventListener('click', function (event) {
+            // open the link in a new tab
+            window.open(exampleLink.href, '_blank');
+        });
+
         const img = document.createElement('img');
         img.src = './images/delete.png';
         img.className = 'remove-word';
-        list.textContent = (counter++) + ' - ' + words[i];
-        wordOfList.appendChild(list); 
+
+        const wordContainer = document.createElement('div');
+
+        wordContainer.textContent = (counter++) + ' - ' + words[i] + ' ->';
+        
+        wordOfList.appendChild(list);
+        list.appendChild(wordContainer);
+        wordContainer.appendChild(exampleLink); 
         list.appendChild(img);
 
         img.addEventListener('click', function (){

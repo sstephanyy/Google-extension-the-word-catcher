@@ -4,6 +4,9 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body{
+    min-width: 240px;
+}
 
 .content{
     display: flex;
@@ -17,20 +20,24 @@ img {
 }
 
 .wordList{
-    display: flex;
+    display: flex;    
 }
 
-li{
+li {
     display: flex;
-    width: 100%;
-    justify-content: space-between;
+    justify-content: space-between; 
+    align-items: center;
 }
 
-.remove-word{
+.remove-word {
     width: 20px;
     height: 20px;
     cursor: pointer;
     display: flex;
-    align-items: center; 
+    align-items: center;
 }
 
+a {
+    text-decoration: none;
+    color: #4f2abe;
+}
