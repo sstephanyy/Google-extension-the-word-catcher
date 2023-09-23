@@ -1,3 +1,4 @@
+
 function updateWords(words) {
     const wordOfList = document.getElementById("wordList"); 
     if (!wordOfList) return; //If doesn't exit wordOfList, the function returns early, ensuring that it doesn't throw errors when trying to manipulate a nonexistent element.
@@ -5,40 +6,70 @@ function updateWords(words) {
     // to ensure that when new words are retrieved and displayed in the UI, they don't accumulate on top of the previously displayed words. Instead, it clears out any previously displayed words within wordOfList before populating it with the newly retrieved words
     wordOfList.innerHTML = '';
 
-    let counter = 1;
-
-
     for (let i = 0; i < words.length; i++) {
         const list = document.createElement('li');
 
-        let exampleLink = document.createElement('a');
-        exampleLink.href = `https://www.playphrase.me/#/search?q=${words[i]}`; 
-        exampleLink.textContent = "Exemplos...";
+        // div to hold the word and link example
+        const wordContainer = document.createElement('div');
+        wordContainer.className = 'word-container';
 
+        const wordLink = document.createElement('a');
+        wordLink.href = `https://www.oxfordlearnersdictionaries.com/us/definition/english/${words[i]}`; 
+        wordLink.textContent = words[i];
+        wordLink.title = "Click here to see the definition"; // Change the href here
+
+        wordLink.className = 'word-link';
+
+        //event listener to open the link in a new tab
+        wordLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            window.open(wordLink.href, '_blank');
+        });
+
+        // Create a span for the counter
+        const counterSpan = document.createElement('span');
+        counterSpan.textContent = (i + 1) + ' - ';
+ 
+
+        // Create the "Exemplos..." link
+        const exampleLink = document.createElement('a');
+        exampleLink.href = `https://www.playphrase.me/#/search?q=${words[i]}`;
+        exampleLink.className = 'example-link';
+        exampleLink.textContent = " -> " + "Exemplos...";
+
+        //event listener to open the link in a new tab
         exampleLink.addEventListener('click', function (event) {
-            // open the link in a new tab
             window.open(exampleLink.href, '_blank');
         });
 
+        // Create the delete button
         const img = document.createElement('img');
         img.src = './images/delete.png';
         img.className = 'remove-word';
 
-        const wordContainer = document.createElement('div');
+        wordContainer.appendChild(counterSpan);
+        wordContainer.appendChild(wordLink);
+        wordContainer.appendChild(exampleLink);
 
-        wordContainer.textContent = (counter++) + ' - ' + words[i] + ' ->';
-        
-        wordOfList.appendChild(list);
         list.appendChild(wordContainer);
-        wordContainer.appendChild(exampleLink); 
         list.appendChild(img);
 
-        img.addEventListener('click', function (){
+        //event listener to the delete button
+        img.addEventListener('click', function () {
             const wordToRemove = words[i]; // get the current element clicked
             removeWord(wordToRemove);
+
+            const clickSound = document.getElementById('clickSound');
+            if (clickSound) {
+                clickSound.play();
+            }
         });
+
+        // Append the li tag into ul tag
+        wordOfList.appendChild(list);
     }
 }
+
 
 function removeWord(word) {
     chrome.storage.local.get({ words: [] }, (result) => {
