@@ -9,35 +9,29 @@ function updateWords(words) {
     for (let i = 0; i < words.length; i++) {
         const list = document.createElement('li');
 
-        // div to hold the word and link example
         const wordContainer = document.createElement('div');
         wordContainer.className = 'word-container';
 
         const wordLink = document.createElement('a');
         wordLink.href = `https://www.oxfordlearnersdictionaries.com/us/definition/english/${words[i]}`; 
         wordLink.textContent = words[i];
-        wordLink.title = "Click here to see the definition"; // Change the href here
+        wordLink.title = "Click here to see the definition"; 
 
         wordLink.className = 'word-link';
 
-        //event listener to open the link in a new tab
         wordLink.addEventListener('click', function (event) {
-            event.preventDefault();
             window.open(wordLink.href, '_blank');
         });
 
-        // Create a span for the counter
         const counterSpan = document.createElement('span');
         counterSpan.textContent = (i + 1) + ' - ';
  
 
-        // Create the "Exemplos..." link
         const exampleLink = document.createElement('a');
         exampleLink.href = `https://www.playphrase.me/#/search?q=${words[i]}`;
         exampleLink.className = 'example-link';
         exampleLink.textContent = " -> " + "Exemplos...";
 
-        //event listener to open the link in a new tab
         exampleLink.addEventListener('click', function (event) {
             window.open(exampleLink.href, '_blank');
         });
@@ -54,7 +48,6 @@ function updateWords(words) {
         list.appendChild(wordContainer);
         list.appendChild(img);
 
-        //event listener to the delete button
         img.addEventListener('click', function () {
             const wordToRemove = words[i]; // get the current element clicked
             removeWord(wordToRemove);
@@ -65,7 +58,6 @@ function updateWords(words) {
             }
         });
 
-        // Append the li tag into ul tag
         wordOfList.appendChild(list);
     }
 }
@@ -74,9 +66,9 @@ function updateWords(words) {
 function removeWord(word) {
     chrome.storage.local.get({ words: [] }, (result) => {
         const words = result.words || [];
-        const index = words.indexOf(word); //finds the index of the word to remove within the words array.
+        const index = words.indexOf(word);
         if (index >= 0) {
-            words.splice(index, 1); // Remove the word from the array
+            words.splice(index, 1);
             //updates the words array in local storage with the modified words array, which no longer contains the removed word
             chrome.storage.local.set({ words: words }, () => {
                 console.log(`Word "${word}" removed from storage.`);
@@ -102,7 +94,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             const wordOfList = document.getElementById("wordList");
             if (!wordOfList) return;
 
-            // Save the updated list to chrome.storage.local
             chrome.storage.local.set({ words: Array.from(wordOfList.children).map(li => li.textContent) }, () => {
                 console.log(`Updated list saved to storage.`);
             });

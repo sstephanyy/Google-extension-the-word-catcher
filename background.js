@@ -7,7 +7,6 @@ function genericOnClick(info) {
   // Send the words for the popup
   chrome.runtime.sendMessage({ text });
 
-  // Save the word to chrome.storage
   chrome.storage.local.get(['words'], (result) => {
       let words = result.words || [];
       words.push(text);
@@ -16,8 +15,6 @@ function genericOnClick(info) {
       });
   });
 }
-
-
 
 
 // This event is triggered when the extension is installed or updated.

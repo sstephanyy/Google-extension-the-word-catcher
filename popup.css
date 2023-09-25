@@ -50,7 +50,7 @@ a{
 }
 
 .word-link::before {
-    content: attr(title); /* Display the title attribute text in the tooltip */
+    content: attr(title); 
     position: absolute;
     background-color: #333;
     color: #fff;
@@ -67,6 +67,6 @@ a{
 .word-link:hover::before {
     visibility: visible;
     opacity: 1;
-    transform: translateX(-10px); /* Add some spacing between link and tooltip */
+    transform: translateX(-10px); 
 }
 
