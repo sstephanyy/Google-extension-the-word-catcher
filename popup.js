@@ -13,7 +13,8 @@ function updateWords(words) {
         wordContainer.className = 'word-container';
 
         const wordLink = document.createElement('a');
-        wordLink.href = `https://www.oxfordlearnersdictionaries.com/us/definition/english/${words[i]}`; 
+        const encodedWord = encodeURI(words[i].replace(/ /g, '-'));
+        wordLink.href = `https://www.oxfordlearnersdictionaries.com/us/definition/english/${encodedWord}`;       
         wordLink.textContent = words[i];
         wordLink.title = "Click here to see the definition"; 
 
