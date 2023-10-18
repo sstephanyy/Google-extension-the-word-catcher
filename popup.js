@@ -14,7 +14,7 @@ function updateWords(words) {
 
         const wordLink = document.createElement('a');
         const encodedWord = encodeURI(words[i].replace(/ /g, '-'));
-        wordLink.href = `https://www.oxfordlearnersdictionaries.com/us/definition/english/${encodedWord}`;       
+        wordLink.href = `https://dictionary.cambridge.org/dictionary/english/${encodedWord}`;       
         wordLink.textContent = words[i];
         wordLink.title = "Click here to see the definition"; 
 
