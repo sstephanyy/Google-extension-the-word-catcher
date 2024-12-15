@@ -31,7 +31,7 @@ chrome.runtime.onInstalled.addListener(function () {
   ];
   for (let i = 0; i < contexts.length; i++) {
     let context = contexts[i];
-    let title = "Inglesando 😎 - Add word";
+    let title = "Inglesando 😎 - Add a word";
     chrome.contextMenus.create({
       title: title,
       contexts: [context],
